@@ -5,7 +5,8 @@ export default function router({ items }: { items: string[] }) {
         {items.map((item) => {
           return (
             <li key={item}>
-              {item} yoo bruh, point, on, feracon negga, stfu, ma negga
+              {item} yoo bruh, point, on, feracon negga, stfu, ma negga, for tha
+              city
             </li>
           );
         })}
