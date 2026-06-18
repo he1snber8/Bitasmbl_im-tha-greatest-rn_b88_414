@@ -130,27 +130,38 @@ jobs:
 
       - name: Send to backend
         run: |
-          RESPONSE=$(curl -s \
-            -w "\n%{http_code}" \
-            -X POST https://0fed-176-221-143-53.ngrok-free.app/projects/evaluate-code-diff \
-            -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${{ secrets.BITASMBL_TOKEN }}" \
-            -d @- <<EOF
+          cat > base.json <<EOF
           {
             "projectApplicationId": ${{ steps.meta.outputs.project_application_id }},
             "requirementId": ${{ steps.meta.outputs.requirement_id }},
             "repo": "${{ github.repository }}",
-            "commitSha": "${{ github.sha }}",
-            "diffs": ${{ steps.diff.outputs.diff }},
-            "activityMeta": ${{ steps.meta.outputs.activity_data }}
+            "commitSha": "${{ github.sha }}"
           }
           EOF
-          )
+
+          jq \
+            --arg diffs '${{ steps.diff.outputs.diff }}' \
+            --argjson activityMeta '${{ steps.meta.outputs.activity_data }}' \
+            '. + {
+              diffs: $diffs,
+              activityMeta: $activityMeta
+            }' base.json > payload.json
+
+          echo "Payload:"
+          cat payload.json
+          jq . payload.json
+
+          RESPONSE=$(curl -sS \
+            -w "\n%{http_code}" \
+            -X POST https://1b9f-176-221-143-53.ngrok-free.app/projects/evaluate-code-diff \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${{ secrets.BITASMBL_TOKEN }}" \
+            --data-binary @payload.json)
 
           STATUS=$(echo "$RESPONSE" | tail -n1)
           BODY=$(echo "$RESPONSE" | sed '$d')
 
-          echo "Error during code evaluation, try again later."
+          echo "HTTP Status: $STATUS"
           echo "Response: $BODY"
 
           if [ "$STATUS" -ne 200 ]; then
