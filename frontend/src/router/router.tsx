@@ -6,7 +6,7 @@ export default function router({ items }: { items: string[] }) {
           return (
             <li key={item}>
               {item} yoo bruh, point, on, feracon negga, stfu, ma negga, for
-              tha, pull up to tha side city
+              tha, pull up to tha side city, fuck you
             </li>
           );
         })}
