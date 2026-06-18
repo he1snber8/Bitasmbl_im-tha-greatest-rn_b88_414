@@ -1,0 +1,44 @@
+{
+  "projectApplicationId": 414,
+  "requirementId": 900,
+  "files": [
+    "frontend/src/router/router.tsx"
+  ],
+  "activityMeta": [
+    {
+      "file": "frontend/src/router/router.tsx",
+      "requirementId": 900,
+      "requirementName": "Implement navigation routing",
+      "changes": 6,
+      "modifiedRanges": [
+        {
+          "startLine": 8,
+          "endLine": 8,
+          "lineCount": 1
+        }
+      ],
+      "timestamps": {
+        "firstModified": "2026-06-18T08:21:49.575Z",
+        "lastModified": "2026-06-18T10:34:30.669Z"
+      },
+      "activity": {
+        "activeDurationSec": 906,
+        "idleBreaks": 2,
+        "avgIntervalSec": 1326.5
+      },
+      "diffStats": {
+        "linesAdded": 1,
+        "linesDeleted": 1,
+        "largeChangeEvents": 0
+      },
+      "patterns": {
+        "burstEdits": false,
+        "longPauseBeforeEdit": true
+      },
+      "sourceHints": {
+        "possiblePaste": false,
+        "suspiciousJump": false
+      }
+    }
+  ]
+}
