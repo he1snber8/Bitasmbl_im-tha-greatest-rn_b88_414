@@ -9,7 +9,7 @@
       "file": "frontend/src/router/router.tsx",
       "requirementId": 900,
       "requirementName": "Implement navigation routing",
-      "changes": 19,
+      "changes": 21,
       "modifiedRanges": [
         {
           "startLine": 8,
@@ -24,16 +24,16 @@
       ],
       "timestamps": {
         "firstModified": "2026-06-18T08:21:49.575Z",
-        "lastModified": "2026-06-18T18:40:53.892Z"
+        "lastModified": "2026-06-18T18:59:33.166Z"
       },
       "activity": {
-        "activeDurationSec": 2521,
-        "idleBreaks": 6,
-        "avgIntervalSec": 1954.5263157894738
+        "activeDurationSec": 2833,
+        "idleBreaks": 7,
+        "avgIntervalSec": 1821.6190476190477
       },
       "diffStats": {
         "linesAdded": 3,
-        "linesDeleted": 2,
+        "linesDeleted": 3,
         "largeChangeEvents": 0
       },
       "patterns": {
