@@ -148,6 +148,7 @@ jobs:
           )
 
           STATUS=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo ""$RESPONSE"" | sed '$d')
 
           echo "Error during code evaluation, try again later."
           echo "Response: $BODY"
