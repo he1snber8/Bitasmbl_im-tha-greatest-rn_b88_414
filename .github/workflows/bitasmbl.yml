@@ -142,13 +142,13 @@ jobs:
             "repo": "${{ github.repository }}",
             "commitSha": "${{ github.sha }}",
             "diffs": ${{ steps.diff.outputs.diff }},
-            "activityMeta": ${{ steps.meta.outputs.activity_data }},
+            "activityMeta": ${{ steps.meta.outputs.activity_data }}
           }
           EOF
           )
 
           STATUS=$(echo "$RESPONSE" | tail -n1)
-          BODY=$(echo ""$RESPONSE"" | sed '$d')
+          BODY=$(echo "$RESPONSE" | sed '$d')
 
           echo "Error during code evaluation, try again later."
           echo "Response: $BODY"
