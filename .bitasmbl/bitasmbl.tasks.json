@@ -1,0 +1,84 @@
+{
+  "fileMappings": [
+    {
+      "file": "frontend/src/router/router.tsx",
+      "requirementId": 900,
+      "requirementName": "Implement navigation routing",
+      "changes": 35,
+      "modifiedRanges": [
+        {
+          "startLine": 1,
+          "endLine": 11,
+          "lineCount": 11
+        },
+        {
+          "startLine": 21,
+          "endLine": 21,
+          "lineCount": 1
+        },
+        {
+          "startLine": 39,
+          "endLine": 39,
+          "lineCount": 1
+        }
+      ],
+      "timestamps": {
+        "firstModified": "2026-06-18T08:21:49.575Z",
+        "lastModified": "2026-06-19T08:26:43.757Z"
+      },
+      "activity": {
+        "activeDurationSec": 4689,
+        "idleBreaks": 11,
+        "avgIntervalSec": 2476.457142857143
+      },
+      "diffStats": {
+        "linesAdded": 13,
+        "linesDeleted": 2,
+        "largeChangeEvents": 0
+      },
+      "patterns": {
+        "burstEdits": false,
+        "longPauseBeforeEdit": true
+      },
+      "sourceHints": {
+        "possiblePaste": false,
+        "suspiciousJump": false
+      }
+    },
+    {
+      "file": "frontend/src/layouts/layout.tsx",
+      "requirementId": 898,
+      "requirementName": "Define portfolio layout",
+      "changes": 10,
+      "modifiedRanges": [
+        {
+          "startLine": 27,
+          "endLine": 27,
+          "lineCount": 1
+        }
+      ],
+      "timestamps": {
+        "firstModified": "2026-06-17T14:29:40.789Z",
+        "lastModified": "2026-06-19T14:05:36.452Z"
+      },
+      "activity": {
+        "activeDurationSec": 2303,
+        "idleBreaks": 7,
+        "avgIntervalSec": 17135.1
+      },
+      "diffStats": {
+        "linesAdded": 1,
+        "linesDeleted": 1,
+        "largeChangeEvents": 0
+      },
+      "patterns": {
+        "burstEdits": false,
+        "longPauseBeforeEdit": true
+      },
+      "sourceHints": {
+        "possiblePaste": false,
+        "suspiciousJump": false
+      }
+    }
+  ]
+}

@@ -24,7 +24,7 @@ export default function layout() {
       <p>yoooo</p>
       <p>yoooo</p>
       <p>yoooo</p>
-      <p>yoooo</p>
+      <p>yoooo</p>s
     </div>
   );
 }

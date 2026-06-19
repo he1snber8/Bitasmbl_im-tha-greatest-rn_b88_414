@@ -1,0 +1,229 @@
+{
+  "projectName": "React Portfolio Builder 3",
+  "projectOverview": "Build a responsive developer portfolio using React with structured sections, reusable components, routing, and configurable content.",
+  "techStackId": 80,
+  "projectId": 399,
+  "requirements": [
+    {
+      "id": 898,
+      "description": "Create the main portfolio layout with semantic page structure and responsive spacing.",
+      "header": "Define portfolio layout",
+      "techStackId": 80,
+      "projectSubTaskSubmissions": [
+        {
+          "id": 1573,
+          "summary": "",
+          "totalScore": 0,
+          "projectRequirementId": 898,
+          "dateSubmitted": null,
+          "submittedSubTasks": [],
+          "submissionsLeft": 3,
+          "isValid": false
+        }
+      ],
+      "projectRequirementMilestones": [
+        {
+          "header": "Set up page structure",
+          "acceptanceCriterias": [
+            {
+              "id": 57,
+              "description": "Include navigation, hero, content, and footer areas.",
+              "isSatisfied": false,
+              "status": "NotEvaluated",
+              "completenessPercentage": 0,
+              "filePathEvidence": [],
+              "projectRequirementMilestoneId": 28
+            },
+            {
+              "id": 56,
+              "description": "Create a responsive layout that works on mobile and desktop screens.",
+              "isSatisfied": false,
+              "status": "NotEvaluated",
+              "completenessPercentage": 0,
+              "filePathEvidence": [],
+              "projectRequirementMilestoneId": 28
+            },
+            {
+              "id": 55,
+              "description": "Use semantic layout elements such as header, main, section, and footer.",
+              "isSatisfied": false,
+              "status": "NotEvaluated",
+              "completenessPercentage": 0,
+              "filePathEvidence": [],
+              "projectRequirementMilestoneId": 28
+            }
+          ],
+          "projectRequirement": {
+            "id": 898,
+            "description": "Create the main portfolio layout with semantic page structure and responsive spacing.",
+            "header": "Define portfolio layout",
+            "techStackId": 80,
+            "paths": [
+              "**/src/layouts/**",
+              "**/src/components/layout/**",
+              "**/src/pages/**"
+            ],
+            "projectId": 399
+          }
+        }
+      ],
+      "paths": [
+        "**/src/layouts/**",
+        "**/src/components/layout/**",
+        "**/src/pages/**"
+      ],
+      "projectId": 399
+    },
+    {
+      "id": 899,
+      "description": "Build reusable showcase components for projects, skills, and experience sections.",
+      "header": "Build showcase components",
+      "techStackId": 80,
+      "projectSubTaskSubmissions": [
+        {
+          "id": 1574,
+          "summary": "",
+          "totalScore": 0,
+          "projectRequirementId": 899,
+          "dateSubmitted": null,
+          "submittedSubTasks": [],
+          "submissionsLeft": 3,
+          "isValid": false
+        }
+      ],
+      "projectRequirementMilestones": [
+        {
+          "header": "Create reusable UI cards",
+          "acceptanceCriterias": [
+            {
+              "id": 60,
+              "description": "Keep component props typed and reusable.",
+              "isSatisfied": false,
+              "status": "NotEvaluated",
+              "completenessPercentage": 0,
+              "filePathEvidence": [],
+              "projectRequirementMilestoneId": 29
+            },
+            {
+              "id": 59,
+              "description": "Render project data dynamically from an array or configuration file.",
+              "isSatisfied": false,
+              "status": "NotEvaluated",
+              "completenessPercentage": 0,
+              "filePathEvidence": [],
+              "projectRequirementMilestoneId": 29
+            },
+            {
+              "id": 58,
+              "description": "Create a reusable project card component.",
+              "isSatisfied": false,
+              "status": "NotEvaluated",
+              "completenessPercentage": 0,
+              "filePathEvidence": [],
+              "projectRequirementMilestoneId": 29
+            }
+          ],
+          "projectRequirement": {
+            "id": 899,
+            "description": "Build reusable showcase components for projects, skills, and experience sections.",
+            "header": "Build showcase components",
+            "techStackId": 80,
+            "paths": [
+              "**/src/components/showcase/**",
+              "**/src/features/showcase/**"
+            ],
+            "projectId": 399
+          }
+        }
+      ],
+      "paths": [
+        "**/src/components/showcase/**",
+        "**/src/features/showcase/**"
+      ],
+      "projectId": 399
+    },
+    {
+      "id": 900,
+      "description": "Set up navigation between portfolio sections and handle unknown routes.",
+      "header": "Implement navigation routing",
+      "techStackId": 80,
+      "projectSubTaskSubmissions": [
+        {
+          "id": 1575,
+          "summary": "",
+          "totalScore": 0,
+          "projectRequirementId": 900,
+          "dateSubmitted": null,
+          "submittedSubTasks": [],
+          "submissionsLeft": 3,
+          "isValid": false
+        }
+      ],
+      "projectRequirementMilestones": [
+        {
+          "header": "Set up application routes",
+          "acceptanceCriterias": [
+            {
+              "id": 63,
+              "description": "Handle unknown routes with a fallback page.",
+              "isSatisfied": false,
+              "status": "NotEvaluated",
+              "completenessPercentage": 0,
+              "filePathEvidence": [],
+              "projectRequirementMilestoneId": 30
+            },
+            {
+              "id": 62,
+              "description": "Configure a route for project detail pages.",
+              "isSatisfied": false,
+              "status": "NotEvaluated",
+              "completenessPercentage": 0,
+              "filePathEvidence": [],
+              "projectRequirementMilestoneId": 30
+            },
+            {
+              "id": 61,
+              "description": "Configure a route for the main portfolio page.",
+              "isSatisfied": false,
+              "status": "NotEvaluated",
+              "completenessPercentage": 0,
+              "filePathEvidence": [],
+              "projectRequirementMilestoneId": 30
+            }
+          ],
+          "projectRequirement": {
+            "id": 900,
+            "description": "Set up navigation between portfolio sections and handle unknown routes.",
+            "header": "Implement navigation routing",
+            "techStackId": 80,
+            "paths": [
+              "**/src/router/**",
+              "**/src/navigation/**",
+              "**/src/pages/**"
+            ],
+            "projectId": 399
+          }
+        }
+      ],
+      "paths": [
+        "**/src/router/**",
+        "**/src/navigation/**",
+        "**/src/pages/**"
+      ],
+      "projectId": 399
+    }
+  ],
+  "projectApplicationId": 414,
+  "currentWorkingProject": "https://github.com/he1snber8/Bitasmbl_im-tha-greatest-rn_b88_414",
+  "domains": [
+    {
+      "name": "FrontEnd",
+      "tech": [
+        "React"
+      ],
+      "initializedLocally": true,
+      "repo": "https://github.com/he1snber8/Bitasmbl_im-tha-greatest-rn_b88_414",
+      "localPath": "/Users/lukakhaja/TEST-39/Bitasmbl_im-tha-greatest-rn_b88_414"
+    }
+  ]
+}
