@@ -20,6 +20,11 @@ export default function layout() {
       <h1>hello!</h1>
       <h1>hello!</h1>
       <h1>hello!</h1>
+      <p>yoooo</p>
+      <p>yoooo</p>
+      <p>yoooo</p>
+      <p>yoooo</p>
+      <p>yoooo</p>
     </div>
   );
 }
