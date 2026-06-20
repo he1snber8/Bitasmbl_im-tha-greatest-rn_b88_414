@@ -4,7 +4,7 @@ export default function HomePage() {
       <header>
         <nav className="flex flex-wrap items-center justify-between gap-4 p-4">
           <a href="/" className="font-bold">
-            Portfolio
+            Portfolio, whisper my name
           </a>
 
           <div className="flex flex-wrap gap-4">
