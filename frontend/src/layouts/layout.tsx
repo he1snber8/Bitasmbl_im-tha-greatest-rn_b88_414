@@ -1,14 +1,3 @@
-/**
- * [BITASMBL] Score : 0/100 STATUS: ❌ FAIL | 
- * CRITICAL INSIGHT:   No code artifacts were provided to evaluate the implementation of the portfolio layout requirement.
- */
-
-/**
- * [BITASMBL] - Define portfolio layout
- * ------------------------------
- * No code diffs found. Cannot evaluate the implementation of semantic elements or layout structure.
- */
-
 export default function HomePage() {
   return (
     <>
@@ -38,7 +27,7 @@ export default function HomePage() {
       </main>
 
       <footer>
-        <p>© 2026 Portfolio</p>
+        <p>© 2026 Portfolioo</p>
       </footer>
     </>
   );
