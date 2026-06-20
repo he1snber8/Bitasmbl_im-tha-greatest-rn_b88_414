@@ -1,15 +1,4 @@
-/**
- * [BITASMBL] Score : 0/100 STATUS: ❌ FAIL | 
- * CRITICAL INSIGHT:   No usable code diffs were provided for evaluation; therefore, no architectural assessment could be made.
- */
-
-/**
- * [BITASMBL] - Define portfolio layout
- * ------------------------------
- * No valid code diffs were provided for evaluation of the layout structure and its elements.
- */
-
-export default function HomePage() {
+export default function HomePage2() {
   return (
     <>
       <header>
