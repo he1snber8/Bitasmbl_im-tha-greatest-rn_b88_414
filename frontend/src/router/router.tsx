@@ -1,4 +1,4 @@
-export const router = [
+export const router3 = [
   {
     path: "/",
     element: <div />,
