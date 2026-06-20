@@ -10,7 +10,7 @@ export default function HomePage() {
           <div className="flex flex-wrap gap-4">
             <a href="/">Home</a>
             <a href="/projects">Projects</a>
-            <a href="/contact">Contactკკკკ</a>
+            <a href="/contact">Contact</a>
           </div>
         </nav>
       </header>
