@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function router3() {
-  return <div>hellou, yo</div>;
+  return <div>hellou, yolo</div>;
 }
