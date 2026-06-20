@@ -1,3 +1,16 @@
+/**
+ * [BITASMBL] Score : 0.25/100 STATUS: ❌ FAIL | 
+ * CRITICAL INSIGHT:   The foundational semantic page structure is incomplete and lacks explicit responsive implementation for the full layout.
+ */
+
+/**
+ * [BITASMBL] - Define portfolio layout
+ * ------------------------------
+ * Missing <main>, <section>, and <footer> semantic elements for a complete page structure.
+ * Hero and content areas are not yet defined; only navigation is currently present.
+ * While 'flex-wrap' supports responsiveness, explicit breakpoints or broader responsive styling for the overall page are needed.
+ */
+
 export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col">

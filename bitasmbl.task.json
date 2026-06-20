@@ -1,35 +1,25 @@
 {
   "projectApplicationId": 414,
-  "requirementId": 898,
+  "requirementId": 899,
   "files": [
-    "frontend/src/pages/page.tsx"
+    "frontend/src/features/showcase/showcase.tsx"
   ],
   "activityMeta": [
     {
-      "file": "frontend/src/pages/page.tsx",
-      "requirementId": 898,
-      "requirementName": "Define portfolio layout",
+      "file": "frontend/src/features/showcase/showcase.tsx",
+      "requirementId": 899,
+      "requirementName": "Build showcase components",
       "changes": 1,
       "modifiedRanges": [
         {
           "startLine": 1,
-          "endLine": 13,
-          "lineCount": 13
-        },
-        {
-          "startLine": 20,
-          "endLine": 20,
-          "lineCount": 1
-        },
-        {
-          "startLine": 62,
-          "endLine": 62,
-          "lineCount": 1
+          "endLine": 38,
+          "lineCount": 38
         }
       ],
       "timestamps": {
-        "firstModified": "2026-06-20T09:00:34.596Z",
-        "lastModified": "2026-06-20T09:00:34.596Z"
+        "firstModified": "2026-06-20T09:20:41.245Z",
+        "lastModified": "2026-06-20T09:20:41.245Z"
       },
       "activity": {
         "activeDurationSec": 0,
@@ -37,8 +27,8 @@
         "avgIntervalSec": 0
       },
       "diffStats": {
-        "linesAdded": 15,
-        "linesDeleted": 2,
+        "linesAdded": 38,
+        "linesDeleted": 0,
         "largeChangeEvents": 0
       },
       "patterns": {
