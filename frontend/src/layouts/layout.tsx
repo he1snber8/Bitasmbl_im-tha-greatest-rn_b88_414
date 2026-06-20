@@ -1,14 +1,3 @@
-/**
- * [BITASMBL] Score : 0/100 STATUS: ❌ FAIL | 
- * CRITICAL INSIGHT:   Evaluation of layout structure and responsiveness is impossible due to missing code diffs.
- */
-
-/**
- * [BITASMBL] - Define portfolio layout
- * ------------------------------
- * No code diffs were provided for this file. Cannot evaluate any implementation.
- */
-
 export default function HomePage() {
   return (
     <>
@@ -28,6 +17,7 @@ export default function HomePage() {
       <main>
         <section>
           <h1>Hero Section</h1>
+          <p>Welcome to my portfolio.</p>
           <p>Welcome to my portfolio.</p>
         </section>
 
