@@ -7,16 +7,16 @@ type ProjectCardProps = {
 function ProjectCard({ title, description, tech }: ProjectCardProps) {
   return (
     <article className="rounded-lg border p-4">
-      <h3 className="text-xl font-semibold">{title}</h3>
+      <h3 className="text-xl font-semibold">{title} prop</h3>
       <p className="mt-2">{description}</p>
-      <span className="mt-3 inline-block text-sm">{tech}</span>
+      <span className="mt-3 inline-block text-sm">{tech} lol</span>
     </article>
   );
 }
 
 const projects: ProjectCardProps[] = [
   {
-    title: "Portfolio Websiteo",
+    title: "Portfolio Websiteoa",
     description: "A responsive personal portfolio.",
     tech: "React + TypeScript",
   },
