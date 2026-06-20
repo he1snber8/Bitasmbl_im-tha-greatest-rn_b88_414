@@ -1,7 +1,7 @@
 export default function layout() {
   return (
     <div>
-      <h1>this da layaut</h1>
+      <h1>this da layauta</h1>
     </div>
   );
 }
