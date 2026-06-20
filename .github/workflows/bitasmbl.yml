@@ -112,6 +112,14 @@ jobs:
           # Extract the entire activityMeta object as a compact JSON string
           ACTIVITY_DATA=$(jq -c '.activityMeta' bitasmbl.task.json)
 
+          FILES=$(jq -r '.files[]' bitasmbl.task.json)
+
+          {
+          echo "files<<EOF"
+          echo "$FILES"
+          echo "EOF"
+          } >> $GITHUB_OUTPUT
+
           echo "project_application_id=$PROJECT_APPLICATION_ID" >> $GITHUB_OUTPUT
           echo "requirement_id=$REQUIREMENT_ID" >> $GITHUB_OUTPUT
 
@@ -120,12 +128,38 @@ jobs:
           echo "$ACTIVITY_DATA" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Get git diff
+      # - name: Get git diff
+      #   id: diff
+      #   run: |
+      #     # Get diff and use jq to handle JSON string escaping properly
+      #     DIFF=$(git diff HEAD^ HEAD)
+      #     DIFF_ESCAPED=$(printf '%s' "$DIFF" | jq -Rs .)
+      #     echo "diff=$DIFF_ESCAPED" >> $GITHUB_OUTPUT
+
+      - name: Get filtered diff
         id: diff
         run: |
-          # Get diff and use jq to handle JSON string escaping properly
-          DIFF=$(git diff HEAD^ HEAD)
+          FILES=$(jq -r '.files[]' bitasmbl.task.json | tr '\n' ' ')
+
+          echo "=========================="
+          echo "FILES SELECTED:"
+          echo "$FILES"
+          echo "=========================="
+
+          DIFF=$(git diff HEAD^ HEAD -- $FILES)
+
+          echo "=========================="
+          echo "RAW DIFF:"
+          echo "$DIFF"
+          echo "=========================="
+
           DIFF_ESCAPED=$(printf '%s' "$DIFF" | jq -Rs .)
+
+          echo "=========================="
+          echo "ESCAPED DIFF:"
+          echo "$DIFF_ESCAPED"
+          echo "=========================="
+
           echo "diff=$DIFF_ESCAPED" >> $GITHUB_OUTPUT
 
       - name: Send to backend
