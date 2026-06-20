@@ -42,7 +42,7 @@ export default function HomePage() {
       </main>
 
       <footer className="p-4 text-center">
-        <p>© 2026 Portfolio. All rights reserved.</p>
+        <p>© 2026 Portfolio. All rights reserved. finally got hot</p>
       </footer>
     </div>
   );
