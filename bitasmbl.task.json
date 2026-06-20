@@ -1,49 +1,33 @@
 {
   "projectApplicationId": 414,
-  "requirementId": 900,
+  "requirementId": 898,
   "files": [
-    "frontend/src/router/router.tsx"
+    "frontend/src/layouts/layout.tsx"
   ],
   "activityMeta": [
     {
-      "file": "frontend/src/router/router.tsx",
-      "requirementId": 900,
-      "requirementName": "Implement navigation routing",
-      "changes": 32,
-      "modifiedRanges": [
-        {
-          "startLine": 1,
-          "endLine": 11,
-          "lineCount": 11
-        },
-        {
-          "startLine": 20,
-          "endLine": 32,
-          "lineCount": 13
-        },
-        {
-          "startLine": 39,
-          "endLine": 39,
-          "lineCount": 1
-        }
-      ],
+      "file": "frontend/src/layouts/layout.tsx",
+      "requirementId": 898,
+      "requirementName": "Define portfolio layout",
+      "changes": 2,
+      "modifiedRanges": [],
       "timestamps": {
-        "firstModified": "2026-06-18T08:21:49.575Z",
-        "lastModified": "2026-06-18T19:37:07.405Z"
+        "firstModified": "2026-06-20T07:08:28.313Z",
+        "lastModified": "2026-06-20T07:10:05.103Z"
       },
       "activity": {
-        "activeDurationSec": 4361,
-        "idleBreaks": 10,
-        "avgIntervalSec": 1265.65625
+        "activeDurationSec": 96,
+        "idleBreaks": 0,
+        "avgIntervalSec": 48
       },
       "diffStats": {
-        "linesAdded": 25,
-        "linesDeleted": 2,
+        "linesAdded": 0,
+        "linesDeleted": 0,
         "largeChangeEvents": 0
       },
       "patterns": {
         "burstEdits": false,
-        "longPauseBeforeEdit": true
+        "longPauseBeforeEdit": false
       },
       "sourceHints": {
         "possiblePaste": false,

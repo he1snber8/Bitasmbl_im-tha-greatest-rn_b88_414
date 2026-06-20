@@ -1,30 +1,7 @@
 export default function layout() {
   return (
     <div>
-      <h1>hello!</h1>
-      <h1>hello!</h1>
-      <h1>hello!</h1>
-      <h1>hello!</h1>
-      <h1>hello!</h1>
-      <h1>hello!</h1>
-      <h1>hello!</h1>
-      <h1>hello!</h1>
-      <h1>hello!</h1>
-      <h1>hello!</h1>
-      <h1>hello!</h1>
-      <h1>hello!</h1>
-      <h1>hello!</h1>
-      <h1>hello!</h1>
-      <h1>hello!</h1>
-      <h1>hello!</h1>
-      <h1>hello!</h1>
-      <h1>hello!</h1>
-      <h1>hello!</h1>
-      <p>yoooo</p>
-      <p>yoooo</p>
-      <p>yoooo</p>
-      <p>yoooo</p>
-      <p>yoooo</p>s
+      <h1>this da layaut</h1>
     </div>
   );
 }
