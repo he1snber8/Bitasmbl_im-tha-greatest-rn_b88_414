@@ -1,5 +1,5 @@
 /**
- * [BITASMBL] Score : 0/100 STATUS: ❌ FAIL | 
+ * [BITASMBL] Score : 0/100 STATUS: ❌ FAIL |
  * CRITICAL INSIGHT:   The provided code defines a simple React component but entirely lacks any routing library integration or route definitions required for navigation.
  */
 
@@ -17,6 +17,8 @@ export default function router() {
     <div>
       ghauter base, gut genug, yeah
       <h1>yooo</h1>
+      <h1>hello</h1>
+      <h1>this is my page</h1>
     </div>
   );
 }
