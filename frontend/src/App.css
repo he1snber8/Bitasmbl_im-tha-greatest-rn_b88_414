@@ -1,4 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Sail&display=swap");
 @import "tailwindcss";
+
+.sail-regular {
+  font-family: "Sail", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
 
 .counter {
   font-size: 16px;
@@ -17,6 +24,11 @@
     outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .hero {

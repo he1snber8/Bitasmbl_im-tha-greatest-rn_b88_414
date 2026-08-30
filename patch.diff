@@ -1,0 +1,65 @@
+diff --git a/frontend/src/router/router.tsx b/frontend/src/router/router.tsx
+index 3de429a..daa7787 100644
+--- a/frontend/src/router/router.tsx
++++ b/frontend/src/router/router.tsx
+@@ -1,5 +1,5 @@
+ /**
+- * [BITASMBL] Score : 0/100 STATUS: ❌ FAIL | 
++ * [BITASMBL] Score : 0/100 STATUS: ❌ FAIL |
+  * CRITICAL INSIGHT:   The provided code defines a simple React component but entirely lacks any routing library integration or route definitions required for navigation.
+  */
+ 
+@@ -17,6 +17,8 @@ export default function router() {
+     <div>
+       ghauter base, gut genug, yeah
+       <h1>yooo</h1>
++      <h1>hello</h1>
++      <h1>this is my page</h1>
+     </div>
+   );
+-}
+\ No newline at end of file
++}
+diff --git a/frontend/src/router/router2.tsx b/frontend/src/router/router2.tsx
+deleted file mode 100644
+index 55af79e..0000000
+--- a/frontend/src/router/router2.tsx
++++ /dev/null
+@@ -1,5 +0,0 @@
+-import React from "react";
+-
+-export default function router2() {
+-  return <div>i am rauteeeer! yooo, du bist gut, asdasdas lol</div>;
+-}
+diff --git a/frontend/src/router/router3.tsx b/frontend/src/router/router3.tsx
+deleted file mode 100644
+index c32fc0f..0000000
+--- a/frontend/src/router/router3.tsx
++++ /dev/null
+@@ -1,25 +0,0 @@
+-/**
+- * [BITASMBL] Score : 0.67/100 STATUS: ❌ FAIL | 
+- * CRITICAL INSIGHT:   The core routing is established for static pages and error handling, but dynamic routing for portfolio projects is still missing.
+- */
+-
+-/**
+- * [BITASMBL] - Implement navigation routing
+- * ------------------------------
+- * Criteria 62 requires a route for project detail pages (e.g., /projects/:id) which is not present.
+- */
+-
+-export const router = [
+-  {
+-    path: "/",
+-    element: <div>Home</div>,
+-  },
+-  {
+-    path: "/about",
+-    element: <div>About</div>,
+-  },
+-  {
+-    path: "*",
+-    element: <div>Not Found</div>,
+-  },
+-];
+\ No newline at end of file

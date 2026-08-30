@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, ReceiptText, X } from "lucide-react";
+import { ChevronDown, ReceiptText, Scaling, X } from "lucide-react";
 import loadingAnimation from "../assets/klima-loading.svg";
 
 import "../index.css";
@@ -30,6 +30,7 @@ interface Topic {
   primary_color?: string;
   secondary_color?: string;
   products: Product[];
+  dish_reviews: DishReview[];
   rating: number;
 }
 interface Product {
@@ -37,19 +38,37 @@ interface Product {
   name: string;
   description: string;
   image_url?: string;
+  raw_image_url?: string;
+  source_url?: string;
   header: string;
   view_btn_x: number;
   view_btn_y: number;
   display_x: number;
   display_y: number;
 }
+interface DishReview {
+  id: number;
+  price: number;
+  name: string;
+  score: number;
+  image_url?: string;
+  review: string;
+  tags: string;
+  topic: string;
+}
 
 export default function MainPage() {
   const IsMobile = useIsMobile();
 
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
   const [showDetails, setShowDetails] = useState(false);
+  const [showProductDetails, setShowProductDetails] = useState<{
+    product: Product | null;
+    show: boolean;
+  }>({ product: null, show: false });
   const [showReview, setShowReview] = useState(false);
+
   // const [liked, setLiked] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -65,7 +84,8 @@ export default function MainPage() {
 
       const { data, error } = await supabase.from("topics").select(`
             *,
-            products (*)
+            products (*),
+            dish_reviews (*)
           `);
 
       if (error) {
@@ -170,7 +190,6 @@ export default function MainPage() {
     <div className="flex flex-col h-screen items-center justify-center bg-black">
       <div className="flex flex-col items-center   relative">
         <img src={loadingAnimation} alt="Loading..." className="h-64   w-64" />
-        <h3 className="text-white absolute bottom-12">სუულ ცოტაც...</h3>
       </div>
     </div>
   ) : (
@@ -515,7 +534,10 @@ export default function MainPage() {
             )}
             <AnimatePresence>
               <button
-                onClick={() => setShowReview(true)}
+                onClick={() => {
+                  setSelectedTopic(topics[topicIds.at(page) ?? "no_topic"]);
+                  setShowReview(true);
+                }}
                 className="flex flex-col  items-center"
               >
                 <motion.div
@@ -675,6 +697,146 @@ export default function MainPage() {
       <AnimatePresence>
         {showDetails && selectedProduct && (
           <motion.div
+            className="absolute inset-0 z-50 overflow-hidden bg-black"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.35 }}
+          >
+            {/* Image */}
+            <motion.div
+              className="absolute inset-0 flex items-center justify-center"
+              initial={{ scale: 0.96, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 1.02, opacity: 0 }}
+              transition={{
+                duration: 0.6,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              <img
+                src={selectedProduct.image_url}
+                alt={selectedProduct.name}
+                className="h-full w-full object-cover"
+              />
+            </motion.div>
+
+            {/* Subtle cinematic overlay */}
+            {/* <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10" /> */}
+
+            {/* Close button */}
+            <motion.button
+              onClick={() => setShowDetails(false)}
+              className="
+          absolute right-5 top-5 z-20
+          flex size-12 items-center justify-center
+          rounded-full
+          border border-white/15
+          bg-gray-400/30
+
+          text-white
+          backdrop-blur-sm
+          shadow-2xl
+        "
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                delay: 0.25,
+                duration: 0.4,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.92 }}
+            >
+              <X className="size-5" />
+            </motion.button>
+
+            {/* Bottom navigation island */}
+
+            {/* Previous */}
+            {/* <motion.button
+                className="
+              flex size-11 items-center justify-center
+              rounded-full
+              text-white/70
+             transition-colors
+             hover:bg-white/10 hover:text-white
+                 "
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.9 }}
+
+              >
+                <ChevronLeft className="size-5" />
+              </motion.button> */}
+
+            {/* Current image indicator */}
+            <motion.div
+              className="
+    absolute bottom-5 left-1/2 z-20
+    -translate-x-1/2
+    flex items-center
+    rounded-full min-w-max
+    border border-white/15
+    bg-black/45 gap-1
+    px-3 py-2
+    backdrop-blur-2xl
+    shadow-[0_20px_60px_rgba(0,0,0,0.4)]
+  "
+              initial={{ opacity: 0, y: 35, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 25, scale: 0.9 }}
+              transition={{
+                delay: 0.15,
+                duration: 0.5,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              <span className="px-3 text-xl  font-medium  text-white/70">
+                {selectedProduct.name}
+              </span>
+
+              {/* <div className="h-5 w-px bg-white/15" /> */}
+
+              <button
+                onClick={() =>
+                  setShowProductDetails({
+                    product: selectedProduct,
+                    show: true,
+                  })
+                }
+                className="
+      flex size-9 items-center justify-center
+      rounded-full
+      bg-white/10
+      text-whiteდ
+      transition-colors
+      hover:bg-white/20
+    "
+              >
+                <Scaling className="size-4" />
+              </button>
+
+              <button
+                onClick={() => setShowDetails(false)}
+                className="
+      flex size-9 items-center justify-center
+      rounded-full
+      bg-white/10
+      text-white
+      transition-colors
+      hover:bg-white/20
+    "
+              >
+                <X className="size-4" />
+              </button>
+            </motion.div>
+          </motion.div>
+          // </motion.div>ç
+        )}
+      </AnimatePresence>
+      {/* <AnimatePresence>
+        {showDetails && selectedProduct && (
+          <motion.div
             className="absolute inset-0 z-50 flex items-end  p-3 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -682,33 +844,18 @@ export default function MainPage() {
           >
             <motion.div
               className="h-[70%] w-full overflow-hidden  backdrop-blur-2xl bg-[#eae6db]  rounded-2xl"
-              initial={
-                {
-                  // y: "100%",
-                  // scale: 0.96,
-                }
-              }
+         
               transition={{ duration: 0.4 }}
               animate={{
                 y: 0,
                 scale: 1,
               }}
               exit={{
-                // y: "100%",
                 scale: 0.96,
               }}
-              // transition={{
-              //   type: "spring",
-              //   stiffness: 240,
-              //   damping: 28,
-              // }}
+  
             >
               <div className="relative">
-                {/* <img
-                  src={selectedProduct.image_url ?? ""}
-                  className="h-64 w-full object-cover"
-                  alt={selectedProduct.name}
-                /> */}
 
                 <button
                   onClick={() => setShowDetails(false)}
@@ -719,45 +866,23 @@ export default function MainPage() {
               </div>
 
               <div className="p-6">
-                {/* <div className="text-xs uppercase tracking-[0.18em] text-black/40">
-                  {selectedProduct.category}
-                </div> */}
 
                 <div className="mt-2 flex items-start justify-between gap-5">
                   <h2 className="font-serif text-3xl text-black">
                     {selectedProduct.name}
                   </h2>
-
-                  {/* <span className="text-lg font-medium">
-                    ${selectedProduct.price}
-                  </span> */}
                 </div>
 
                 <p className="mt-5 text-sm leading-6 text-black/60">
                   {selectedProduct.description}
                 </p>
-
-                {/* <div className="mt-7 grid grid-cols-3 gap-2">naxe</div> */}
-
-                {/* <motion.button
-                  className="mt-6 flex w-full items-center justify-center gap-3 rounded-full bg-black py-4 text-sm font-medium text-white"
-                  whileHover={{
-                    scale: 1.015,
-                  }}
-                  whileTap={{
-                    scale: 0.97,
-                  }}
-                >
-                  Add to collection
-                  <ShoppingBag size={17} />
-                </motion.button> */}
               </div>
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
       <AnimatePresence>
-        {showReview && (
+        {showReview && selectedTopic && (
           <motion.div
             className="absolute inset-0 z-50 flex items-end  p-3 backdrop-blur-sm"
             initial={{ opacity: 0 }}
@@ -765,7 +890,7 @@ export default function MainPage() {
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="h-[70%] w-full overflow-hidden  backdrop-blur-2xl bg-[#eae6db]  rounded-2xl"
+              className="w-full max-h-[80vh] overflow-y-auto bg-[#eae6db] backdrop-blur-sm rounded-2xl scrollbar-hide"
               initial={{ y: 40 }}
               transition={{ duration: 0.4 }}
               animate={{
@@ -785,50 +910,485 @@ export default function MainPage() {
                 </button>
               </div>
 
-              <div className="p-6">
-                {/* <div className="text-xs uppercase tracking-[0.18em] text-black/40">
-                  {selectedProduct.category}
-                </div> */}
+              <div className="p-6 pb-10">
+                {/* Header */}
+                <div className="mb-8">
+                  <div className="flex flex-col  items- justify-between">
+                    <div>
+                      <p className="text-2xl georgian-font text-black ">
+                        ჩემი შეფასება
+                      </p>
+                    </div>
 
-                <div className="mt-2 flex flex-col items-start justify-between gap-5">
-                  {/* <h2 className="font-serif text-3xl text-black">შეფასება</h2> */}
+                    <span className="text-black/40 text-sm">
+                      {topics[topicIds[page]]?.dish_reviews?.length ?? 0} კერძი
+                    </span>
+                  </div>
 
-                  <h1 className="max-w-[230px] text-black text-center georgian-font  text-[44px] leading-[0.95]">
-                    Sefaseba
-                  </h1>
-                  <h1 className="max-w-[230px] text-black text-center text-[14px] leading-[0.95]">
-                    კერძი #1 - იმენა ყლეობა
-                  </h1>
-                  <h1 className="max-w-[230px] text-black text-center text-[14px] leading-[0.95]">
-                    კერძი #2 - ძაან ყლეობა
-                  </h1>
-                  <h1 className="max-w-[230px] text-black text-center text-[14px] leading-[0.95]">
-                    კერძი #3 - სულმთლა ყლეობა
-                  </h1>
-
-                  {/* <span className="text-lg font-medium">
-                    ${selectedProduct.price}
-                  </span> */}
+                  <div className="mt-4 h-px bg-black/10" />
                 </div>
 
-                {/* <p className="mt-5 text-sm leading-6 text-black/60">
-                  {selectedProduct.description}
-                </p> */}
+                {/* Dish reviews */}
+                <div className="flex flex-col gap-5 relative ">
+                  {topics[topicIds[page]]?.dish_reviews?.map(
+                    (dish: DishReview, index: number) => (
+                      <motion.article
+                        key={dish.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          delay: index * 0.12,
+                          duration: 0.4,
+                          ease: "easeOut",
+                        }}
+                        className="
+            flex flex-col
+            items-stretch
+            gap-2
+            rounded-3xl
+            border border-black/10
+            bg-black/[0.025]
+            p-4
+          "
+                      >
+                        <div className="flex items-start gap-2  ">
+                          {dish.image_url && (
+                            <div className="relative shrink-0 w-36 h-36 overflow-hidden rounded-2xl">
+                              <img
+                                src={dish.image_url}
+                                alt={dish.name}
+                                className="h-full w-full object-cover"
+                              />
+                            </div>
+                          )}
 
-                {/* <div className="mt-7 grid grid-cols-3 gap-2">naxe</div> */}
+                          <div className="flex min-w-0 flex-1 flex-col py-1 ">
+                            {/* Name */}
+                            <div className="flex items-start justify-between gap-3">
+                              <div className="flex flex-col gap-2">
+                                {/* <p className="mb-1 text-[9px] uppercase tracking-[0.2em] text-black/35">
+                                  კერძი #{index + 1}
+                                </p> */}
 
-                {/* <motion.button
-                  className="mt-6 flex w-full items-center justify-center gap-3 rounded-full bg-black py-4 text-sm font-medium text-white"
-                  whileHover={{
-                    scale: 1.015,
-                  }}
-                  whileTap={{
-                    scale: 0.97,
-                  }}
-                >
-                  Add to collection
-                  <ShoppingBag size={17} />
-                </motion.button> */}
+                                <h2 className="georgian-font text-[18px] leading-[1.05] text-black">
+                                  {dish.name}
+                                </h2>
+                              </div>
+                            </div>
+
+                            {/* Stars */}
+                            <div className="mt- flex items-center gap-1">
+                              {[1, 2, 3, 4, 5].map((star) => {
+                                const value = dish.score / 2;
+
+                                return (
+                                  <span
+                                    key={star}
+                                    className={
+                                      star <= Math.floor(value)
+                                        ? "text-[#D99A16] text-lg"
+                                        : star - 0.5 <= value
+                                          ? "text-[#D99A16] text-lg"
+                                          : "text-black/15 text-lg"
+                                    }
+                                  >
+                                    ★
+                                  </span>
+                                );
+                              })}
+                            </div>
+                            <h3 className="georgian-font absolut text-black right-4 top-4 text-5xl">
+                              {dish.price}l
+                            </h3>
+
+                            {/* Tags */}
+                          </div>
+                        </div>
+                        {dish.tags && (
+                          <div className=" flex flex-wrap gap-1.5">
+                            {dish.tags.split(";").map((tag) => (
+                              <span
+                                key={tag}
+                                className="
+                      rounded-full
+                      border
+                      border-black/10
+                      px-2.5
+                      py-1
+                      text-[9px]
+                      text-black/50
+                    "
+                              >
+                                {tag.trim()}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        <p className=" text-[13px] leading-[1.45] text-black/65">
+                          {dish.review}
+                        </p>
+                      </motion.article>
+                    ),
+                  )}
+                  {/* <p className="mt-3 text-[13px] leading-[1.45] text-black/65">
+                            {dish.review}
+                          </p> */}
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showProductDetails.show && showProductDetails.product && (
+          <motion.div
+            className="absolute inset-0 z-50 flex items-center justify-center bg-black/20 p-3 backdrop-blur-md"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="relative w-full max-w-4xl max-h-[92vh] overflow-hidden rounded-[28px] bg-[#eae6db] shadow-2xl"
+              initial={{ opacity: 0, y: 30, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.97 }}
+              transition={{
+                duration: 0.4,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              {/* Close */}
+              <motion.button
+                onClick={() =>
+                  setShowProductDetails({
+                    show: false,
+                    product: null,
+                  })
+                }
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.92 }}
+                className="absolute right-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-md"
+              >
+                <X size={19} strokeWidth={1.8} />
+              </motion.button>
+
+              {/* Scrollable content */}
+              <div className="max-h-[92vh] overflow-y-auto scrollbar-hide">
+                <div className="p-6 sm:p-8 md:p-10">
+                  {/* Header */}
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1, duration: 0.35 }}
+                    className="mb-7 pr-14"
+                  >
+                    {/* <p className="mb-2 text-[10px] uppercase tracking-[0.25em] text-black/35">
+                      პროდუქტი
+                    </p> */}
+
+                    {/* <h1 className="georgian-font text-[34px] leading-none text-black sm:text-[42px]">
+                      {selectedProduct?.name}
+                    </h1> */}
+                  </motion.div>
+
+                  {/* Product */}
+                  <div className="flex flex-col gap-4">
+                    {/* Product image */}
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        delay: 0.12,
+                        duration: 0.45,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                      className="relative flex min-h[320px] items-center justify-center overflow-hidden rounded-[24px] bg-black/[0.025]"
+                    >
+                      {selectedProduct?.image_url ? (
+                        <img
+                          src={selectedProduct.raw_image_url}
+                          alt={selectedProduct.name}
+                          className="h-full w-40 scale-120 object-contain p-6 mix-blend-multiply"
+                        />
+                      ) : (
+                        <div className="text-sm text-black/30">
+                          სურათი არ არის
+                        </div>
+                      )}
+
+                      {/* Product score */}
+                      {/* <div className="absolute left-4 top-4 flex h-14 w-14 flex-col items-center justify-center rounded-full bg-white/80 backdrop-blur-md">
+                        <span className="text-lg font-medium leading-none text-black">
+
+                        </span>
+
+                        <span className="mt-1 text-[9px] uppercase tracking-wider text-black/40">
+                          /10
+                        </span>
+                      </div> */}
+                    </motion.div>
+
+                    {/* Product information */}
+                    <motion.div
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        delay: 0.18,
+                        duration: 0.45,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                      className="flex flex-col "
+                    >
+                      {/* Description */}
+                      {selectedProduct?.description && (
+                        <div className="rounded-2xl   p-5">
+                          <p className="text-sm leading-[1.6] text-black/70">
+                            {selectedProduct.description}
+                          </p>
+                        </div>
+                      )}
+
+                      {/* Product details */}
+                      <div className="my-4 divide-y divide-black/[0.07] rounded-2xl border border-black/[0.07] bg-white/20" />
+
+                      {selectedProduct?.source_url && (
+                        <motion.a
+                          href={selectedProduct.source_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={{ y: -2 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="mt-4 flex items-center justify-center gap-3 rounded-2xl bg-[#241b17] px-5 py-4 text-sm text-white shadow-lg shadow-black/10 transition"
+                        >
+                          <span>ნახე ოფიციალურ საიტზე</span>
+
+                          <span className="text-lg leading-none">↗</span>
+                        </motion.a>
+                      )}
+                    </motion.div>
+                  </div>
+
+                  {/* Divider */}
+                  {/* <div className="my-7 h-px bg-black/10" /> */}
+
+                  {/* Critic review */}
+                  <motion.section
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      delay: 0.25,
+                      duration: 0.4,
+                    }}
+                    className="rounded-[24px] relative border border-black/[0.07] bg-white/25 p-5 sm:p-6"
+                  >
+                    {/* Review header */}
+                    <div className="flex flex-wrap items-center justify-between gap-4">
+                      <div>
+                        <p className="mb-1 text-[10px] uppercase tracking-[0.2em] text-black/35">
+                          ჩემი შეფასება
+                        </p>
+
+                        <h2 className="georgian-font text-[25px] text-black">
+                          რას ვფიქრობ
+                        </h2>
+                      </div>
+
+                      {/* Stars */}
+                      <div className="flex items-center gap-3">
+                        <div className="flex gap-0.5">
+                          {Array.from({ length: 5 }).map((_, i) => {
+                            // const score = selectedProduct?.score ?? 0;
+                            const score = 5;
+                            const starValue = score / 2;
+
+                            return (
+                              <span
+                                key={i}
+                                className={
+                                  i + 1 <= Math.floor(starValue)
+                                    ? "text-[#d89b16] text-xl"
+                                    : i < starValue
+                                      ? "text-[#d89b16] text-xl"
+                                      : "text-black/15 text-xl"
+                                }
+                              >
+                                ★
+                              </span>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Review text */}
+                    <p className="mt-5 max-w-3xl text-[15px] leading-[1.65] text-black/65">
+                      {/* {selectedProduct?.review ?? */}
+                      "ეს პროდუქტი ნამდვილად იმსახურებს ყურადღებას. გემოს,
+                      ტექსტურისა და საერთო გამოცდილების მხრივ, ჩემი აზრით,
+                      საკმაოდ კარგად არის დაბალანსებული."
+                    </p>
+
+                    <div className="mt-6 flex items-center justify-center gap-4 text-black">
+                      {/* Left ornament */}
+                      <svg
+                        viewBox="0 0 180 32"
+                        className="h-8 w-32 shrink-0"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        {/* horizontal line */}
+                        <path
+                          d="M0 16H52"
+                          stroke="currentColor"
+                          strokeWidth="1"
+                          opacity="0.45"
+                        />
+
+                        {/* outer flourish */}
+                        <path
+                          d="
+        M52 16
+        C62 16 63 7 73 7
+        C82 7 82 16 73 16
+        C67 16 66 23 73 25
+        C81 27 88 19 91 16
+      "
+                          stroke="currentColor"
+                          strokeWidth="1.2"
+                          strokeLinecap="round"
+                        />
+
+                        {/* heart */}
+                        <path
+                          d="
+        M91 13
+        C88 8 81 10 81 14
+        C81 18 85 21 91 25
+        C97 21 101 18 101 14
+        C101 10 94 8 91 13Z
+      "
+                          fill="currentColor"
+                        />
+
+                        {/* inner flourish */}
+                        <path
+                          d="
+        M101 16
+        C106 21 111 26 118 24
+        C124 22 123 16 118 16
+        C111 16 112 7 121 7
+        C130 7 132 16 142 16
+      "
+                          stroke="currentColor"
+                          strokeWidth="1.2"
+                          strokeLinecap="round"
+                        />
+
+                        {/* little leaf */}
+                        <path
+                          d="M55 12C58 9 61 9 63 12C60 13 57 13 55 12Z"
+                          fill="currentColor"
+                          opacity="0.7"
+                        />
+
+                        <path
+                          d="M55 20C58 23 61 23 63 20C60 19 57 19 55 20Z"
+                          fill="currentColor"
+                          opacity="0.7"
+                        />
+
+                        {/* endpoint */}
+                        <circle
+                          cx="2"
+                          cy="16"
+                          r="1.5"
+                          fill="currentColor"
+                          opacity="0.6"
+                        />
+                      </svg>
+
+                      {/* Name */}
+                      <span className="sail-regular whitespace-nowrap text-[28px] leading-none">
+                        ekkkuna
+                      </span>
+
+                      {/* Right ornament — mirrored */}
+                      <svg
+                        viewBox="0 0 180 32"
+                        className="h-8 w-32 shrink-0 -scale-x-100"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M0 16H52"
+                          stroke="currentColor"
+                          strokeWidth="1"
+                          opacity="0.45"
+                        />
+
+                        <path
+                          d="
+        M52 16
+        C62 16 63 7 73 7
+        C82 7 82 16 73 16
+        C67 16 66 23 73 25
+        C81 27 88 19 91 16
+      "
+                          stroke="currentColor"
+                          strokeWidth="1.2"
+                          strokeLinecap="round"
+                        />
+
+                        <path
+                          d="
+        M91 13
+        C88 8 81 10 81 14
+        C81 18 85 21 91 25
+        C97 21 101 18 101 14
+        C101 10 94 8 91 13Z
+      "
+                          fill="currentColor"
+                        />
+
+                        <path
+                          d="
+        M101 16
+        C106 21 111 26 118 24
+        C124 22 123 16 118 16
+        C111 16 112 7 121 7
+        C130 7 132 16 142 16
+      "
+                          stroke="currentColor"
+                          strokeWidth="1.2"
+                          strokeLinecap="round"
+                        />
+
+                        <path
+                          d="M55 12C58 9 61 9 63 12C60 13 57 13 55 12Z"
+                          fill="currentColor"
+                          opacity="0.7"
+                        />
+
+                        <path
+                          d="M55 20C58 23 61 23 63 20C60 19 57 19 55 20Z"
+                          fill="currentColor"
+                          opacity="0.7"
+                        />
+
+                        <circle
+                          cx="2"
+                          cy="16"
+                          r="1.5"
+                          fill="currentColor"
+                          opacity="0.6"
+                        />
+                      </svg>
+                    </div>
+                  </motion.section>
+                </div>
               </div>
             </motion.div>
           </motion.div>
