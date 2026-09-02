@@ -527,7 +527,9 @@ export default function MainPage() {
                       }}
                       className="text-xl font-light"
                     >
-                      <GoPlus className="size-10" />
+                      <div className="size-10">
+                        <GoPlus />
+                      </div>
                     </span>
                   </motion.div>
 
@@ -644,7 +646,9 @@ export default function MainPage() {
                   exit={{ opacity: 0, y: 30 }}
                   transition={{ delay: 0, duration: 0.4 }}
                 >
-                  <LuListCheck className="size-8 mx-auto" />
+                  <div className="size-8 mx-auto">
+                    <LuListCheck />
+                  </div>
                 </motion.div>
 
                 <svg
@@ -1144,10 +1148,14 @@ export default function MainPage() {
                         </div>
 
                         <p className="text-[15px] georgian-font-2 leading-[1.45] italic text-black/65">
-                          <BiSolidQuoteAltLeft className="mr-1 inline-block align-top text-orange-700/40" />
+                          <div className="mr-1 inline-block align-top text-orange-700/40">
+                            <BiSolidQuoteAltLeft />
+                          </div>
 
                           {dish.review}
-                          <BiSolidQuoteAltLeft className="ml-1 inline-block rotate-180 align-bottom text-orange-700/40" />
+                          <div className="ml-1 inline-block rotate-180 align-bottom text-orange-700/40">
+                            <BiSolidQuoteAltLeft />
+                          </div>
                         </p>
                       </motion.article>
                     ),
