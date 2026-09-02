@@ -247,6 +247,27 @@ export default function MainPage() {
 
           {TOPICS_END_PAGE === page && (
             <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#eae6db]">
+              <motion.img
+                src={"./klima-end-bg.png"}
+                alt="Influencer"
+                draggable={false}
+                onLoad={() => setLoaded(true)}
+                initial={{ scale: 1.04, opacity: 0 }}
+                animate={{
+                  scale: showIntro ? 1.04 : 1,
+                  opacity: loaded ? 1 : 0,
+                }}
+                transition={{
+                  scale: {
+                    duration: 1.8,
+                  },
+                  opacity: {
+                    duration: 0.5,
+                  },
+                }}
+                className="h-full w-full object-cover absolute opacity-30!"
+              />
+
               <div className="flex flex-col items-center gap-4">
                 <motion.img
                   initial={{ opacity: 0 }}
@@ -274,28 +295,144 @@ export default function MainPage() {
             </div>
           )}
           {page === -1 && (
-            <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#eae6db]">
-              <div className="flex flex-col items-center gap-4">
-                <div className="flex flex-col items-center gap-4 ">
+            <div className="absolute inset-0 bot z-50 flex items-center justify-center overflow-hidden bg-[#eae6db]">
+              {/* Subtle decorative background */}
+              <motion.img
+                src={"./klima-bg.png"}
+                alt="Influencer"
+                draggable={false}
+                onLoad={() => setLoaded(true)}
+                initial={{ scale: 1.04, opacity: 0 }}
+                animate={{
+                  scale: showIntro ? 1.04 : 1,
+                  opacity: loaded ? 1 : 0,
+                }}
+                transition={{
+                  scale: {
+                    duration: 1.8,
+                  },
+                  opacity: {
+                    duration: 0.5,
+                  },
+                }}
+                className="h-full w-full object-cover absolute opacity-40!"
+              />
+
+              <div className="pointer-events-none absolute inset-0">
+                <div className="absolute left-1/2 top-[28%] h-72 w-72 -translate-x-1/2 rounded-full bg-orange-700/[0.04] blur-3xl" />
+              </div>
+
+              <div className="relative flex flex-col items-center">
+                {/* Character */}
+                <motion.div
+                  initial={{ opacity: 0, y: 18, scale: 0.92 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{
+                    duration: 0.7,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="relative"
+                >
                   <motion.img
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1, scale: 1.2 }}
-                    transition={{ delay: 0.2, duration: 0.4 }}
-                    src={"./klima-cute.png"}
-                    alt="Loading..."
-                    className=" w-64"
+                    src="./klima-cute.png"
+                    alt="Klima"
+                    className="w-64 sm:w-72"
+                    animate={{
+                      y: [0, -5, 0],
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                   />
-                  <span className="sail-regular whitespace-nowrap text-5xl text-black -translate-y-16 leading-none">
+
+                  {/* Floating heart */}
+                  <motion.span
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{
+                      opacity: [0.7, 1, 0.7],
+                      scale: [1, 1.08, 1],
+                      rotate: [-8, 4, -8],
+                    }}
+                    transition={{
+                      delay: 0.8,
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                    className="absolute right-2 top-8 text-4xl text-black"
+                  >
+                    ♡
+                  </motion.span>
+                </motion.div>
+
+                {/* Brand */}
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: 0.35,
+                    duration: 0.6,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="-mt-10 flex flex-col items-center"
+                >
+                  <span className="sail-regular text-[58px] leading-none tracking-tight text-black">
                     ekkkuna
                   </span>
-                </div>
-                <button
+
+                  <div className="mt-4 flex items-center gap-3">
+                    <span className="h-px w-8 bg-black/20" />
+                    <span className="text-[9px] uppercase tracking-[0.35em] text-black/40">
+                      food · stories · opinions
+                    </span>
+                    <span className="h-px w-8 bg-black/20" />
+                  </div>
+                </motion.div>
+
+                {/* Start button */}
+                <motion.button
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: 0.6,
+                    duration: 0.6,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  whileHover={{
+                    scale: 1.04,
+                  }}
+                  whileTap={{
+                    scale: 0.96,
+                  }}
                   onClick={() => setPage((prev) => prev + 1)}
-                  className="georgian-font-2 p-4 rounded-full -translate-y-16 border-2 px-8 bg-amber-100/10 font-bold text-black text-xl "
+                  className="group georgian-font-2 mt-8 flex items-center gap-3 rounded-full border border-black/80 bg-black px-9 py-4 text-lg font-bold text-[#eae6db] transition-colors duration-300 hover:bg-black/90"
                 >
-                  დაწყება
-                </button>
-                {/* </motion.div> */}
+                  <span>დაწყება</span>
+
+                  <motion.span
+                    className="text-base"
+                    animate={{ x: [0, 3, 0] }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    →
+                  </motion.span>
+                </motion.button>
+
+                {/* Tiny footer detail */}
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1, duration: 0.5 }}
+                  className="mt-5 text-[9px] uppercase tracking-[0.3em] text-black/25"
+                >
+                  შენი გემოვნების დღიური
+                </motion.span>
               </div>
             </div>
           )}
@@ -527,9 +664,7 @@ export default function MainPage() {
                       }}
                       className="text-xl font-light"
                     >
-                      <div className="size-10">
-                        <GoPlus />
-                      </div>
+                      <GoPlus className="size-8" />
                     </span>
                   </motion.div>
 
@@ -646,9 +781,7 @@ export default function MainPage() {
                   exit={{ opacity: 0, y: 30 }}
                   transition={{ delay: 0, duration: 0.4 }}
                 >
-                  <div className="size-8 mx-auto">
-                    <LuListCheck />
-                  </div>
+                  <LuListCheck className="size-8 mx-auto" />
                 </motion.div>
 
                 <svg
