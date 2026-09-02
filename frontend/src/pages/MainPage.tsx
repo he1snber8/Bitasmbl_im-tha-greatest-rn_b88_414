@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, ReceiptText, Scaling, X } from "lucide-react";
+import { ChevronDown, Scaling, X } from "lucide-react";
 import loadingAnimation from "../assets/klima-loading.svg";
 
 import "../index.css";
@@ -9,6 +9,9 @@ import { supabase } from "../../utils/supabase";
 
 import { Rating } from "../assets/ui/Review";
 import useIsMobile from "../hooks/useIsMobile";
+import { LuListCheck } from "react-icons/lu";
+import { GoPlus } from "react-icons/go";
+import { BiSolidQuoteAltLeft } from "react-icons/bi";
 
 // type Product = {
 //   id: number;
@@ -28,6 +31,7 @@ interface Topic {
   cover_img?: string;
   logo_img?: string;
   primary_color?: string;
+  plus_btn_color?: string;
   secondary_color?: string;
   products: Product[];
   dish_reviews: DishReview[];
@@ -72,11 +76,17 @@ export default function MainPage() {
   // const [liked, setLiked] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [loaded, setLoaded] = useState(false);
 
   const [topics, setTopics] = useState<Record<string, Topic>>({});
   const [topicIds, setTopicIds] = useState<string[]>([""]);
 
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(-1);
+
+  // useEffect(() => {
+  //   // eslint-disable-next-line react-hooks/set-state-in-effect
+  //   setLoaded(false);
+  // }, [page, topicIds]);
 
   useEffect(() => {
     async function getTopics() {
@@ -111,6 +121,8 @@ export default function MainPage() {
 
     getTopics();
   }, []);
+
+  const TOPICS_END_PAGE = topicIds.length;
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -218,21 +230,97 @@ export default function MainPage() {
           bounceDamping: 25,
         }}
       >
-        <motion.img
-          src={topics[topicIds.at(page) ?? "no_topic"]?.cover_img}
-          alt="Influencer"
-          className="h-full w-full select-none object-cover"
-          draggable={false}
-          initial={{ scale: 1.04, opacity: 0 }}
-          animate={{
-            scale: showIntro ? 1.04 : 1,
-            opacity: 1,
-          }}
-          transition={{
-            duration: 1.8,
-            // ease: [0.16, 1, 0.3, 1],
-          }}
-        />
+        {/* <TopicImage
+          src={topics[topicIds.at(page) ?? "no_topic"]?.cover_img ?? "no_topic"}
+          alt={topics[topicIds.at(page) ?? "no_topic"]?.id}
+        /> */}
+        <div className="relative h-full w-full">
+          {!loaded && (
+            <div className="absolute inset-0 z-50 flex items-center justify-center bg-black">
+              <img
+                src={loadingAnimation}
+                alt="Loading..."
+                className="h-64 w-64"
+              />
+            </div>
+          )}
+
+          {TOPICS_END_PAGE === page && (
+            <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#eae6db]">
+              <div className="flex flex-col items-center gap-4">
+                <motion.img
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1, scale: 1.2 }}
+                  transition={{ delay: 0.2, duration: 0.4 }}
+                  src={"./klima-confused.png"}
+                  alt="Loading..."
+                  className="h-64  -translate-y-8 w-64"
+                />
+                <motion.div
+                  onClick={() => setPage((prev) => prev - 1)}
+                  // whileTap={{ y: 13 }}
+                  className="flex absolute left-8 top-4 items-center gap-4  w-18 h-18  rounded-full border border-white/15 bg-black/20  px-3 py-3 backdrop-blur-sm"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2, duration: 0.4 }}
+                >
+                  <ChevronDown className="rotate-90 size-12" />
+                </motion.div>
+                <p className="absolute bottom-20 text-[15px] georgian-font-2 leading-[1.65] text-black/65">
+                  {/* {selectedProduct?.review ?? */}
+                  ახალი განხილვა ყოველ სამშაბათს, 20:00-ზე
+                </p>
+              </div>
+            </div>
+          )}
+          {page === -1 && (
+            <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#eae6db]">
+              <div className="flex flex-col items-center gap-4">
+                <div className="flex flex-col items-center gap-4 ">
+                  <motion.img
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1, scale: 1.2 }}
+                    transition={{ delay: 0.2, duration: 0.4 }}
+                    src={"./klima-cute.png"}
+                    alt="Loading..."
+                    className=" w-64"
+                  />
+                  <span className="sail-regular whitespace-nowrap text-5xl text-black -translate-y-16 leading-none">
+                    ekkkuna
+                  </span>
+                </div>
+                <button
+                  onClick={() => setPage((prev) => prev + 1)}
+                  className="georgian-font-2 p-4 rounded-full -translate-y-16 border-2 px-8 bg-amber-100/10 font-bold text-black text-xl "
+                >
+                  დაწყება
+                </button>
+                {/* </motion.div> */}
+              </div>
+            </div>
+          )}
+
+          <motion.img
+            src={topics[topicIds.at(page) ?? "no_topic"]?.cover_img}
+            alt="Influencer"
+            draggable={false}
+            onLoad={() => setLoaded(true)}
+            initial={{ scale: 1.04, opacity: 0 }}
+            animate={{
+              scale: showIntro ? 1.04 : 1,
+              opacity: loaded ? 1 : 0,
+            }}
+            transition={{
+              scale: {
+                duration: 1.8,
+              },
+              opacity: {
+                duration: 0.5,
+              },
+            }}
+            className="h-full w-full object-cover"
+          />
+        </div>
       </motion.div>
 
       {/* ------------------------------------------------ */}
@@ -431,7 +519,16 @@ export default function MainPage() {
                     //   duration: 1.6,
                     // }}
                   >
-                    <span className="text-xl font-light">+</span>
+                    <span
+                      style={{
+                        color:
+                          topics[topicIds.at(page) ?? "no_topic"]
+                            .plus_btn_color,
+                      }}
+                      className="text-xl font-light"
+                    >
+                      <GoPlus className="size-10" />
+                    </span>
                   </motion.div>
 
                   <AnimatePresence>
@@ -547,7 +644,7 @@ export default function MainPage() {
                   exit={{ opacity: 0, y: 30 }}
                   transition={{ delay: 0, duration: 0.4 }}
                 >
-                  <ReceiptText className="size-8 mx-auto" />
+                  <LuListCheck className="size-8 mx-auto" />
                 </motion.div>
 
                 <svg
@@ -565,6 +662,7 @@ export default function MainPage() {
                     letterSpacing="0.5"
                   >
                     <textPath
+                      className="georgian-font-2 text-xl font-semibold"
                       href="#textArc"
                       startOffset="50%"
                       textAnchor="middle"
@@ -576,7 +674,7 @@ export default function MainPage() {
               </button>
             </AnimatePresence>
             <AnimatePresence>
-              {page < topicIds.length - 1 ? (
+              {page !== TOPICS_END_PAGE ? (
                 <motion.div
                   onClick={() => setPage((prev) => prev + 1)}
                   className="flex items-center gap-4 w-18 h-18  rounded-full border border-white/15 bg-black/20 px-3 py-3 backdrop-blur-sm"
@@ -640,23 +738,26 @@ export default function MainPage() {
                     {selectedProduct.category}
                   </div> */}
 
-                  <h2 className="mt-1 text-lg font-medium">
+                  <h2 className="mt-1 text-xl georgian-font-2  font-medium">
                     {selectedProduct.name}
                   </h2>
 
-                  <div className="mt-1 text-sm text-white/70">
+                  <div className="mt-1 text-sm georgian-font-2  text-white/70">
                     {selectedProduct.description}
                   </div>
 
                   <div className="mt-3 flex gap-2">
                     <motion.button
-                      className={`rounded-full bg-[${topics[topicIds.at(page) ?? "no_topic"].primary_color}] px-5 py-2 text-xs font-semibold text-`}
+                      className={`rounded-full georgian-font-2  bg-[${topics[topicIds.at(page) ?? "no_topic"].primary_color}] px-5 py-2 text-base font-semibold text-`}
                       whileHover={{
                         scale: 1.03,
                       }}
                       style={{
                         backgroundColor:
                           topics[topicIds.at(page) ?? "no_topic"].primary_color,
+                        color:
+                          topics[topicIds.at(page) ?? "no_topic"]
+                            .plus_btn_color,
                       }}
                       whileTap={{
                         scale: 0.95,
@@ -693,6 +794,7 @@ export default function MainPage() {
       {/* ------------------------------------------------ */}
       {/* PRODUCT DETAIL MODAL                             */}
       {/* ------------------------------------------------ */}
+      {/* <div className="relative"> */}
 
       <AnimatePresence>
         {showDetails && selectedProduct && (
@@ -717,8 +819,19 @@ export default function MainPage() {
               <img
                 src={selectedProduct.image_url}
                 alt={selectedProduct.name}
-                className="h-full w-full object-cover"
+                className="h-full w-full border object-cover"
               />
+              <div
+                onClick={() =>
+                  setShowProductDetails({
+                    product: selectedProduct,
+                    show: true,
+                  })
+                }
+                className="h-6 w-6 border flex flex-col items-center justify-center align-middle border-white -2 rounded-full z-100 absolute  "
+              >
+                <div className="h-4 w-4 animate-pulse  bg-white rounded-full z-100 absolute  " />
+              </div>
             </motion.div>
 
             {/* Subtle cinematic overlay */}
@@ -834,6 +947,7 @@ export default function MainPage() {
           // </motion.div>ç
         )}
       </AnimatePresence>
+
       {/* <AnimatePresence>
         {showDetails && selectedProduct && (
           <motion.div
@@ -915,14 +1029,14 @@ export default function MainPage() {
                 <div className="mb-8">
                   <div className="flex flex-col  items- justify-between">
                     <div>
-                      <p className="text-2xl georgian-font text-black ">
+                      <p className="text-4xl mx-auto text-center  georgian-font-2 text-black ">
                         ჩემი შეფასება
                       </p>
                     </div>
 
-                    <span className="text-black/40 text-sm">
+                    {/* <span className="text-black/40 text-sm">
                       {topics[topicIds[page]]?.dish_reviews?.length ?? 0} კერძი
-                    </span>
+                    </span> */}
                   </div>
 
                   <div className="mt-4 h-px bg-black/10" />
@@ -948,12 +1062,12 @@ export default function MainPage() {
             rounded-3xl
             border border-black/10
             bg-black/[0.025]
-            p-4
+            p-3
           "
                       >
                         <div className="flex items-start gap-2  ">
                           {dish.image_url && (
-                            <div className="relative shrink-0 w-36 h-36 overflow-hidden rounded-2xl">
+                            <div className="relative shrink-0 w-28 h-28 overflow-hidden rounded-2xl">
                               <img
                                 src={dish.image_url}
                                 alt={dish.name}
@@ -970,7 +1084,7 @@ export default function MainPage() {
                                   კერძი #{index + 1}
                                 </p> */}
 
-                                <h2 className="georgian-font text-[18px] leading-[1.05] text-black">
+                                <h2 className="georgian-font-2 text-[18px] leading-[1.05] text-black font-semibold">
                                   {dish.name}
                                 </h2>
                               </div>
@@ -997,35 +1111,43 @@ export default function MainPage() {
                                 );
                               })}
                             </div>
-                            <h3 className="georgian-font absolut text-black right-4 top-4 text-5xl">
-                              {dish.price}l
+                            <h3 className=" sail-regular w-max relative -translate-y-2  text-black  text-3xl">
+                              {dish.price}
+                              <span className="text-xl absolute top-4 -right-4 ">
+                                ₾
+                              </span>
                             </h3>
 
-                            {/* Tags */}
-                          </div>
-                        </div>
-                        {dish.tags && (
-                          <div className=" flex flex-wrap gap-1.5">
-                            {dish.tags.split(";").map((tag) => (
-                              <span
-                                key={tag}
-                                className="
+                            <div className=" flex  flex-wrap gap-1.5 mt-2 ">
+                              {dish.tags.split(";").map((tag) => (
+                                <span
+                                  key={tag}
+                                  className="
+                                   georgian-font-2
                       rounded-full
+                      w-max
                       border
                       border-black/10
                       px-2.5
                       py-1
-                      text-[9px]
-                      text-black/50
+                      2px]
+                      text-black
                     "
-                              >
-                                {tag.trim()}
-                              </span>
-                            ))}
+                                >
+                                  {tag.trim()}
+                                </span>
+                              ))}
+                            </div>
+
+                            {/* Tags */}
                           </div>
-                        )}
-                        <p className=" text-[13px] leading-[1.45] text-black/65">
+                        </div>
+
+                        <p className="text-[15px] georgian-font-2 leading-[1.45] italic text-black/65">
+                          <BiSolidQuoteAltLeft className="mr-1 inline-block align-top text-orange-700/40" />
+
                           {dish.review}
+                          <BiSolidQuoteAltLeft className="ml-1 inline-block rotate-180 align-bottom text-orange-700/40" />
                         </p>
                       </motion.article>
                     ),
@@ -1113,7 +1235,7 @@ export default function MainPage() {
                         />
                       ) : (
                         <div className="text-sm text-black/30">
-                          სურათი არ არის
+                          სურათი არ არის ხელმისაწვდომი
                         </div>
                       )}
 
@@ -1143,7 +1265,7 @@ export default function MainPage() {
                       {/* Description */}
                       {selectedProduct?.description && (
                         <div className="rounded-2xl   p-5">
-                          <p className="text-sm leading-[1.6] text-black/70">
+                          <p className="text-lg leading-[1.6] georgian-font-2 text-black/70">
                             {selectedProduct.description}
                           </p>
                         </div>
@@ -1159,9 +1281,11 @@ export default function MainPage() {
                           rel="noopener noreferrer"
                           whileHover={{ y: -2 }}
                           whileTap={{ scale: 0.98 }}
-                          className="mt-4 flex items-center justify-center gap-3 rounded-2xl bg-[#241b17] px-5 py-4 text-sm text-white shadow-lg shadow-black/10 transition"
+                          className="mt-4 flex  items-center justify-center gap-3 rounded-2xl bg-[#241b17] px-5 py-4 text-sm text-white shadow-lg shadow-black/10 transition"
                         >
-                          <span>ნახე ოფიციალურ საიტზე</span>
+                          <span className="georgian-font-2 font-semibold text-lg">
+                            ნახე ოფიციალურ საიტზე
+                          </span>
 
                           <span className="text-lg leading-none">↗</span>
                         </motion.a>
@@ -1180,16 +1304,12 @@ export default function MainPage() {
                       delay: 0.25,
                       duration: 0.4,
                     }}
-                    className="rounded-[24px] relative border border-black/[0.07] bg-white/25 p-5 sm:p-6"
+                    className="rounded-[24px] mt-8 relative border border-black/[0.07] bg-white/25 p-5 sm:p-6"
                   >
                     {/* Review header */}
                     <div className="flex flex-wrap items-center justify-between gap-4">
                       <div>
-                        <p className="mb-1 text-[10px] uppercase tracking-[0.2em] text-black/35">
-                          ჩემი შეფასება
-                        </p>
-
-                        <h2 className="georgian-font text-[25px] text-black">
+                        <h2 className="georgian-font-2 text-[25px] text-black">
                           რას ვფიქრობ
                         </h2>
                       </div>
@@ -1222,170 +1342,20 @@ export default function MainPage() {
                     </div>
 
                     {/* Review text */}
-                    <p className="mt-5 max-w-3xl text-[15px] leading-[1.65] text-black/65">
+                    <p className="mt-5 max-w-3xl text-[15px] georgian-font-2 leading-[1.65] text-black/65">
                       {/* {selectedProduct?.review ?? */}
-                      "ეს პროდუქტი ნამდვილად იმსახურებს ყურადღებას. გემოს,
+                      ეს პროდუქტი ნამდვილად იმსახურებს ყურადღებას. გემოს,
                       ტექსტურისა და საერთო გამოცდილების მხრივ, ჩემი აზრით,
-                      საკმაოდ კარგად არის დაბალანსებული."
+                      საკმაოდ კარგად არის დაბალანსებული.
                     </p>
 
                     <div className="mt-6 flex items-center justify-center gap-4 text-black">
                       {/* Left ornament */}
-                      <svg
-                        viewBox="0 0 180 32"
-                        className="h-8 w-32 shrink-0"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                      >
-                        {/* horizontal line */}
-                        <path
-                          d="M0 16H52"
-                          stroke="currentColor"
-                          strokeWidth="1"
-                          opacity="0.45"
-                        />
-
-                        {/* outer flourish */}
-                        <path
-                          d="
-        M52 16
-        C62 16 63 7 73 7
-        C82 7 82 16 73 16
-        C67 16 66 23 73 25
-        C81 27 88 19 91 16
-      "
-                          stroke="currentColor"
-                          strokeWidth="1.2"
-                          strokeLinecap="round"
-                        />
-
-                        {/* heart */}
-                        <path
-                          d="
-        M91 13
-        C88 8 81 10 81 14
-        C81 18 85 21 91 25
-        C97 21 101 18 101 14
-        C101 10 94 8 91 13Z
-      "
-                          fill="currentColor"
-                        />
-
-                        {/* inner flourish */}
-                        <path
-                          d="
-        M101 16
-        C106 21 111 26 118 24
-        C124 22 123 16 118 16
-        C111 16 112 7 121 7
-        C130 7 132 16 142 16
-      "
-                          stroke="currentColor"
-                          strokeWidth="1.2"
-                          strokeLinecap="round"
-                        />
-
-                        {/* little leaf */}
-                        <path
-                          d="M55 12C58 9 61 9 63 12C60 13 57 13 55 12Z"
-                          fill="currentColor"
-                          opacity="0.7"
-                        />
-
-                        <path
-                          d="M55 20C58 23 61 23 63 20C60 19 57 19 55 20Z"
-                          fill="currentColor"
-                          opacity="0.7"
-                        />
-
-                        {/* endpoint */}
-                        <circle
-                          cx="2"
-                          cy="16"
-                          r="1.5"
-                          fill="currentColor"
-                          opacity="0.6"
-                        />
-                      </svg>
 
                       {/* Name */}
                       <span className="sail-regular whitespace-nowrap text-[28px] leading-none">
                         ekkkuna
                       </span>
-
-                      {/* Right ornament — mirrored */}
-                      <svg
-                        viewBox="0 0 180 32"
-                        className="h-8 w-32 shrink-0 -scale-x-100"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M0 16H52"
-                          stroke="currentColor"
-                          strokeWidth="1"
-                          opacity="0.45"
-                        />
-
-                        <path
-                          d="
-        M52 16
-        C62 16 63 7 73 7
-        C82 7 82 16 73 16
-        C67 16 66 23 73 25
-        C81 27 88 19 91 16
-      "
-                          stroke="currentColor"
-                          strokeWidth="1.2"
-                          strokeLinecap="round"
-                        />
-
-                        <path
-                          d="
-        M91 13
-        C88 8 81 10 81 14
-        C81 18 85 21 91 25
-        C97 21 101 18 101 14
-        C101 10 94 8 91 13Z
-      "
-                          fill="currentColor"
-                        />
-
-                        <path
-                          d="
-        M101 16
-        C106 21 111 26 118 24
-        C124 22 123 16 118 16
-        C111 16 112 7 121 7
-        C130 7 132 16 142 16
-      "
-                          stroke="currentColor"
-                          strokeWidth="1.2"
-                          strokeLinecap="round"
-                        />
-
-                        <path
-                          d="M55 12C58 9 61 9 63 12C60 13 57 13 55 12Z"
-                          fill="currentColor"
-                          opacity="0.7"
-                        />
-
-                        <path
-                          d="M55 20C58 23 61 23 63 20C60 19 57 19 55 20Z"
-                          fill="currentColor"
-                          opacity="0.7"
-                        />
-
-                        <circle
-                          cx="2"
-                          cy="16"
-                          r="1.5"
-                          fill="currentColor"
-                          opacity="0.6"
-                        />
-                      </svg>
                     </div>
                   </motion.section>
                 </div>

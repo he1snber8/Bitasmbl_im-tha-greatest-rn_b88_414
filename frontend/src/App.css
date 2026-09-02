@@ -1,4 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Sail&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Sail&sdisplay=swap"); */
+/* @import url("https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Sail&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Sail&display=swap");
 @import "tailwindcss";
 
 .sail-regular {
@@ -199,7 +201,15 @@
 
 @font-face {
   font-family: "MyGeorgian";
-  src: url("/fonts/aladini.ttf") format("truetype");
+  src: url("/fonts/geo_script.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "MyGeorgian2";
+  src: url("/fonts/irubaqidze.otf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -207,4 +217,7 @@
 
 .georgian-font {
   font-family: "MyGeorgian" !important;
+}
+.georgian-font-2 {
+  font-family: "MyGeorgian2" !important;
 }
