@@ -246,7 +246,7 @@ export default function MainPage() {
           )}
 
           {TOPICS_END_PAGE === page && (
-            <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#eae6db]">
+            <div className="fixed inset-0 z-[999]  flex items-center justify-center overflow-hidden bg-[#eae6db] touch-none">
               <motion.img
                 src={"./klima-end-bg.png"}
                 alt="Influencer"
@@ -295,7 +295,7 @@ export default function MainPage() {
             </div>
           )}
           {page === -1 && (
-            <div className="absolute inset-0 bot z-50 flex items-center justify-center overflow-hidden bg-[#eae6db]">
+            <div className="fixed inset-0 z-[999]  flex items-center justify-center overflow-hidden bg-[#eae6db]">
               {/* Subtle decorative background */}
               <motion.img
                 src={"./klima-bg.png"}
