@@ -177,6 +177,58 @@ export default function MainPage() {
   //   setSelectedProduct(product);
   //   setShowDetails(false);
   // };
+
+  if (TOPICS_END_PAGE === page)
+    return (
+      <div className="fixed inset-0 z-[999]  flex items-center justify-center overflow-hidden bg-[#eae6db] touch-none">
+        <motion.img
+          src={"./klima-end-bg.png"}
+          alt="Influencer"
+          draggable={false}
+          onLoad={() => setLoaded(true)}
+          initial={{ scale: 1.04, opacity: 0 }}
+          animate={{
+            scale: showIntro ? 1.04 : 1,
+            opacity: loaded ? 1 : 0,
+          }}
+          transition={{
+            scale: {
+              duration: 1.8,
+            },
+            opacity: {
+              duration: 0.5,
+            },
+          }}
+          className="h-full w-full object-cover absolute opacity-30!"
+        />
+
+        <div className="flex flex-col items-center gap-4">
+          <motion.img
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, scale: 1.2 }}
+            transition={{ delay: 0.2, duration: 0.4 }}
+            src={"./klima-confused.png"}
+            alt="Loading..."
+            className="h-64  -translate-y-8 w-64"
+          />
+          <motion.div
+            onClick={() => setPage((prev) => prev - 1)}
+            // whileTap={{ y: 13 }}
+            className="flex absolute left-8 top-4 items-center gap-4  w-18 h-18  rounded-full border border-white/15 bg-black/20  px-3 py-3 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.4 }}
+          >
+            <ChevronDown className="rotate-90 size-12" />
+          </motion.div>
+          <p className="absolute bottom-20 text-[15px] georgian-font-2 leading-[1.65] text-black/65">
+            {/* {selectedProduct?.review ?? */}
+            ახალი განხილვა ყოველ სამშაბათს, 20:00-ზე
+          </p>
+        </div>
+      </div>
+    );
+
   if (!IsMobile)
     return (
       <div className="flex flex-col h-screen items-center justify-center bg-[#eae6db] ">
@@ -197,6 +249,151 @@ export default function MainPage() {
         </div>
       </div>
     );
+
+  if (page === -1) {
+    return (
+      <div className="fixed inset-0 z-[999]  flex items-center justify-center overflow-hidden bg-[#eae6db]">
+        {/* Subtle decorative background */}
+        <motion.img
+          src={"./klima-bg.png"}
+          alt="Influencer"
+          draggable={false}
+          onLoad={() => setLoaded(true)}
+          initial={{ scale: 1.04, opacity: 0 }}
+          animate={{
+            scale: showIntro ? 1.04 : 1,
+            opacity: loaded ? 1 : 0,
+          }}
+          transition={{
+            scale: {
+              duration: 1.8,
+            },
+            opacity: {
+              duration: 0.5,
+            },
+          }}
+          className="h-full w-full object-cover absolute opacity-40!"
+        />
+
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute left-1/2 top-[28%] h-72 w-72 -translate-x-1/2 rounded-full bg-orange-700/[0.04] blur-3xl" />
+        </div>
+
+        <div className="relative flex flex-col items-center">
+          {/* Character */}
+          <motion.div
+            initial={{ opacity: 0, y: 18, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{
+              duration: 0.7,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="relative"
+          >
+            <motion.img
+              src="./klima-cute.png"
+              alt="Klima"
+              className="w-64 sm:w-72"
+              animate={{
+                y: [0, -5, 0],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+
+            {/* Floating heart */}
+            <motion.span
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{
+                opacity: [0.7, 1, 0.7],
+                scale: [1, 1.08, 1],
+                rotate: [-8, 4, -8],
+              }}
+              transition={{
+                delay: 0.8,
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="absolute right-2 top-8 text-4xl text-black"
+            >
+              ♡
+            </motion.span>
+          </motion.div>
+
+          {/* Brand */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.35,
+              duration: 0.6,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="-mt-10 flex flex-col items-center"
+          >
+            <span className="sail-regular text-[58px] leading-none tracking-tight text-black">
+              ekkkuna
+            </span>
+
+            <div className="mt-4 flex items-center gap-3">
+              <span className="h-px w-8 bg-black/20" />
+              <span className="text-[9px] uppercase tracking-[0.35em] text-black/40">
+                food · stories · opinions
+              </span>
+              <span className="h-px w-8 bg-black/20" />
+            </div>
+          </motion.div>
+
+          {/* Start button */}
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.6,
+              duration: 0.6,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            whileHover={{
+              scale: 1.04,
+            }}
+            whileTap={{
+              scale: 0.96,
+            }}
+            onClick={() => setPage((prev) => prev + 1)}
+            className="group georgian-font-2 mt-8 flex items-center gap-3 rounded-full border border-black/80 bg-black px-9 py-4 text-lg font-bold text-[#eae6db] transition-colors duration-300 hover:bg-black/90"
+          >
+            <span>დაწყება</span>
+
+            <motion.span
+              className="text-base"
+              animate={{ x: [0, 3, 0] }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              →
+            </motion.span>
+          </motion.button>
+
+          {/* Tiny footer detail */}
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 0.5 }}
+            className="mt-5 text-[9px] uppercase tracking-[0.3em] text-black/25"
+          >
+            შენი გემოვნების დღიური
+          </motion.span>
+        </div>
+      </div>
+    );
+  }
 
   return topicIds.length === 0 || isLoading ? (
     <div className="flex flex-col h-screen items-center justify-center bg-black">
@@ -242,198 +439,6 @@ export default function MainPage() {
                 alt="Loading..."
                 className="h-64 w-64"
               />
-            </div>
-          )}
-
-          {TOPICS_END_PAGE === page && (
-            <div className="fixed inset-0 z-[999]  flex items-center justify-center overflow-hidden bg-[#eae6db] touch-none">
-              <motion.img
-                src={"./klima-end-bg.png"}
-                alt="Influencer"
-                draggable={false}
-                onLoad={() => setLoaded(true)}
-                initial={{ scale: 1.04, opacity: 0 }}
-                animate={{
-                  scale: showIntro ? 1.04 : 1,
-                  opacity: loaded ? 1 : 0,
-                }}
-                transition={{
-                  scale: {
-                    duration: 1.8,
-                  },
-                  opacity: {
-                    duration: 0.5,
-                  },
-                }}
-                className="h-full w-full object-cover absolute opacity-30!"
-              />
-
-              <div className="flex flex-col items-center gap-4">
-                <motion.img
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1, scale: 1.2 }}
-                  transition={{ delay: 0.2, duration: 0.4 }}
-                  src={"./klima-confused.png"}
-                  alt="Loading..."
-                  className="h-64  -translate-y-8 w-64"
-                />
-                <motion.div
-                  onClick={() => setPage((prev) => prev - 1)}
-                  // whileTap={{ y: 13 }}
-                  className="flex absolute left-8 top-4 items-center gap-4  w-18 h-18  rounded-full border border-white/15 bg-black/20  px-3 py-3 backdrop-blur-sm"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2, duration: 0.4 }}
-                >
-                  <ChevronDown className="rotate-90 size-12" />
-                </motion.div>
-                <p className="absolute bottom-20 text-[15px] georgian-font-2 leading-[1.65] text-black/65">
-                  {/* {selectedProduct?.review ?? */}
-                  ახალი განხილვა ყოველ სამშაბათს, 20:00-ზე
-                </p>
-              </div>
-            </div>
-          )}
-          {page === -1 && (
-            <div className="fixed inset-0 z-[999]  flex items-center justify-center overflow-hidden bg-[#eae6db]">
-              {/* Subtle decorative background */}
-              <motion.img
-                src={"./klima-bg.png"}
-                alt="Influencer"
-                draggable={false}
-                onLoad={() => setLoaded(true)}
-                initial={{ scale: 1.04, opacity: 0 }}
-                animate={{
-                  scale: showIntro ? 1.04 : 1,
-                  opacity: loaded ? 1 : 0,
-                }}
-                transition={{
-                  scale: {
-                    duration: 1.8,
-                  },
-                  opacity: {
-                    duration: 0.5,
-                  },
-                }}
-                className="h-full w-full object-cover absolute opacity-40!"
-              />
-
-              <div className="pointer-events-none absolute inset-0">
-                <div className="absolute left-1/2 top-[28%] h-72 w-72 -translate-x-1/2 rounded-full bg-orange-700/[0.04] blur-3xl" />
-              </div>
-
-              <div className="relative flex flex-col items-center">
-                {/* Character */}
-                <motion.div
-                  initial={{ opacity: 0, y: 18, scale: 0.92 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{
-                    duration: 0.7,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  className="relative"
-                >
-                  <motion.img
-                    src="./klima-cute.png"
-                    alt="Klima"
-                    className="w-64 sm:w-72"
-                    animate={{
-                      y: [0, -5, 0],
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  />
-
-                  {/* Floating heart */}
-                  <motion.span
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{
-                      opacity: [0.7, 1, 0.7],
-                      scale: [1, 1.08, 1],
-                      rotate: [-8, 4, -8],
-                    }}
-                    transition={{
-                      delay: 0.8,
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                    className="absolute right-2 top-8 text-4xl text-black"
-                  >
-                    ♡
-                  </motion.span>
-                </motion.div>
-
-                {/* Brand */}
-                <motion.div
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: 0.35,
-                    duration: 0.6,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  className="-mt-10 flex flex-col items-center"
-                >
-                  <span className="sail-regular text-[58px] leading-none tracking-tight text-black">
-                    ekkkuna
-                  </span>
-
-                  <div className="mt-4 flex items-center gap-3">
-                    <span className="h-px w-8 bg-black/20" />
-                    <span className="text-[9px] uppercase tracking-[0.35em] text-black/40">
-                      food · stories · opinions
-                    </span>
-                    <span className="h-px w-8 bg-black/20" />
-                  </div>
-                </motion.div>
-
-                {/* Start button */}
-                <motion.button
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: 0.6,
-                    duration: 0.6,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  whileHover={{
-                    scale: 1.04,
-                  }}
-                  whileTap={{
-                    scale: 0.96,
-                  }}
-                  onClick={() => setPage((prev) => prev + 1)}
-                  className="group georgian-font-2 mt-8 flex items-center gap-3 rounded-full border border-black/80 bg-black px-9 py-4 text-lg font-bold text-[#eae6db] transition-colors duration-300 hover:bg-black/90"
-                >
-                  <span>დაწყება</span>
-
-                  <motion.span
-                    className="text-base"
-                    animate={{ x: [0, 3, 0] }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  >
-                    →
-                  </motion.span>
-                </motion.button>
-
-                {/* Tiny footer detail */}
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1, duration: 0.5 }}
-                  className="mt-5 text-[9px] uppercase tracking-[0.3em] text-black/25"
-                >
-                  შენი გემოვნების დღიური
-                </motion.span>
-              </div>
             </div>
           )}
 
